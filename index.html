@@ -5,6 +5,7 @@
         <title>Dashboard Kelompok</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <link rel="stylesheet" href="./adminlte.min.css">
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -51,23 +52,29 @@
                                         <h3 class="card-title">Covid dan IHSG</h3>
                                         <div class="card-tools">
                                             <ul class="nav nav-pills ml-auto">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" href="#all-chart" data-toggle="tab">Semua</a>
+                                                <li class="nav-item nav-tabs">
+                                                    <a class="nav-link active" href="#covid-dan-ihsg" data-toggle="tab">Semua</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#covid-chart" data-toggle="tab">Covid</a>
+                                                <li class="nav-item nav-tabs">
+                                                    <a class="nav-link" href="#covid-saja" data-toggle="tab">Covid</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#ihsg-chart" data-toggle="tab">IHSG</a>
+                                                <li class="nav-item nav-tabs">
+                                                    <a class="nav-link" href="#ihsg-saja" data-toggle="tab">IHSG</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="tab-content">
-                                            <canvas class="chart tab-pane active" id="myChart1"></canvas>
-                                            <canvas class="chart tab-pane" id="myChart2"></canvas>
-                                            <canvas class="chart tab-pane" id="myChart3"></canvas>
+                                            <div class="graph chart tab-pane active" id="covid-dan-ihsg">
+                                                <canvas id="myChart1"></canvas>
+                                            </div>
+                                            <div class="graph chart tab-pane" id="covid-saja">
+                                                <canvas id="myChart2"></canvas>
+                                            </div>
+                                            <div class="graph chart tab-pane" id="ihsg-saja">
+                                                <canvas id="myChart3"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -116,11 +123,39 @@
                 );
 
                 var myChart1 = new Chart(
-                    document.getElementById('myChart1'),
+                    document.getElementById('myChart1').getContext('2d'),
                     {
                         type: 'line',
                         data: {
-                            labels: hariKe,
+                            labels: labels,
+                            datasets: [{
+                                label: 'Covid-19',
+                                backgroundColor: 'blue',
+                                borderColor: 'blue',
+                                borderWidth: 1.5,
+                                data: data_covid,
+                                tension: 0.1,
+                                radius: 0,
+                            },{
+                                label: 'IHSG',
+                                backgroundColor: 'red',
+                                borderColor: 'red',
+                                borderWidth: 1.5,
+                                data: data_ihsg,
+                                tension: 0.1,
+                                radius: 0,
+                            }]
+                        },
+                        option: {}
+                    }
+                )
+
+                var myChart2 = new Chart(
+                    document.getElementById('myChart2').getContext('2d'),
+                    {
+                        type: 'line',
+                        data: {
+                            labels: labels,
                             datasets: [{
                                 label: 'Covid-19',
                                 backgroundColor: 'blue',
@@ -134,7 +169,28 @@
                         option: {}
                     }
                 )
+
+                var myChart3 = new Chart(
+                    document.getElementById('myChart3').getContext('2d'),
+                    {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'IHSG',
+                                backgroundColor: 'red',
+                                borderColor: 'red',
+                                borderWidth: 1.5,
+                                data: data_ihsg,
+                                tension: 0.1,
+                                radius: 0,
+                            }]
+                        },
+                        option: {}
+                    }
+                )
             }
         </script>
+        <script src="./bootstrap.bundle.min.js"></script>
     </body>
 </html>
