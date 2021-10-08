@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard Kelompok</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <link rel="stylesheet" href="./adminlte.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+    </head>
+    <body class="sidebar-collapse">
+        <div class="wrapper">
+            <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                <!-- Navbar Kiri -->
+                <ul class="navbar-nav">
+                    <li class="navbar-item d-none d-sm-inline-block">
+                        <a href="./index.html" class="nav-link">Kelompok</a>
+                    </li>
+                    <li class="navbar-item d-none d-sm-inline-block">
+                        <a href="./individu.html" class="nav-link">Individu</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="content-wrapper">
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0">Dashboard Visualisasi Data Covid-19 dan IHSG</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Covid dan IHSG</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="flourish-embed flourish-chart" data-src="visualisation/7455539"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Covid dan IHSG</h3>
+                                        <div class="card-tools">
+                                            <ul class="nav nav-pills ml-auto">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="#all-chart" data-toggle="tab">Semua</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#covid-chart" data-toggle="tab">Covid</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#ihsg-chart" data-toggle="tab">IHSG</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <canvas class="chart tab-pane active" id="myChart1"></canvas>
+                                            <canvas class="chart tab-pane" id="myChart2"></canvas>
+                                            <canvas class="chart tab-pane" id="myChart3"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="main-footer">
+                <strong>Kelompok 7 DisJas</strong>
+                <div class="float-right d-none d-sm-inline-black">
+                    <b>Copyright</b>
+                </div>
+            </footer>
+        </div>
+        <script>
+            // Ambil data
+            d3.csv('./covidIHSGcsv.csv')
+                .then(grafik);
+
+            function grafik(covid){
+                var hariKe = covid.map(
+                    function(c) {
+                        return c.harike
+                    }
+                );
+
+                console.log(covid)
+
+                var labels = covid.map(
+                    function(c) {
+                        return c.date;
+                    }
+                );
+
+                var data_covid = covid.map(
+                    function(c){
+                        return c.covid;
+                    }
+                );
+
+                var data_ihsg = covid.map(
+                    function(c){
+                        return c.ihsg;
+                    }
+                );
+
+                var myChart1 = new Chart(
+                    document.getElementById('myChart1'),
+                    {
+                        type: 'line',
+                        data: {
+                            labels: hariKe,
+                            datasets: [{
+                                label: 'Covid-19',
+                                backgroundColor: 'blue',
+                                borderColor: 'blue',
+                                borderWidth: 1.5,
+                                data: data_covid,
+                                tension: 0.1,
+                                radius: 0,
+                            }]
+                        },
+                        option: {}
+                    }
+                )
+            }
+        </script>
+    </body>
+</html>
