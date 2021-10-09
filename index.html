@@ -95,6 +95,10 @@
             d3.csv('./covidIHSGcsv.csv')
                 .then(grafik);
 
+            function kuadratik(x,y){
+                var n = x.length
+            }
+
             function grafik(covid){
                 var hariKe = covid.map(
                     function(c) {
@@ -135,7 +139,11 @@
                                 borderWidth: 1.5,
                                 data: data_covid,
                                 tension: 0.1,
+                                pointHitRadius: 1000,
                                 radius: 0,
+                                interaction: {
+                                    intersect: false
+                                },
                             },{
                                 label: 'IHSG',
                                 backgroundColor: 'red',
@@ -144,9 +152,32 @@
                                 data: data_ihsg,
                                 tension: 0.1,
                                 radius: 0,
+                                pointHitRadius: 1000,
+                                fill: false,
+                                interaction: {
+                                    intersect: false
+                                },
                             }]
                         },
-                        option: {}
+                        option: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Tanggal'
+                                    }
+                                },
+                                y: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Value'
+                                    },
+                                }
+                            },
+                        }
                     }
                 )
 
@@ -164,9 +195,32 @@
                                 data: data_covid,
                                 tension: 0.1,
                                 radius: 0,
+                                pointHitRadius: 1000,
+                                fill: false
                             }]
                         },
-                        option: {}
+                        option: {
+                            responsive: true,
+                            interaction: {
+                                intersect: false
+                            },
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Tanggal'
+                                    }
+                                },
+                                y: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Value'
+                                    },
+                                }
+                            },
+                        }
                     }
                 )
 
@@ -184,9 +238,32 @@
                                 data: data_ihsg,
                                 tension: 0.1,
                                 radius: 0,
+                                pointHitRadius: 1000,
+                                fill: false
                             }]
                         },
-                        option: {}
+                        option: {
+                            responsive: true,
+                            interaction: {
+                                intersect: false
+                            },
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Tanggal'
+                                    }
+                                },
+                                y: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Value'
+                                    },
+                                }
+                            },
+                        }
                     }
                 )
             }
